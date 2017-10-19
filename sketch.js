@@ -3,7 +3,7 @@ var q = "q=Elon,NC";
 var zip = "zip=15227";
 var units = "units=imperial";
 var appid = "appid=";
-var yourAPIKey; // add your API Key here!
+var yourAPIKey = "42396ff80468c90bdbb51462e8b1d530"; // add your API Key here!
 
 var url = "http://api.openweathermap.org/data/2.5/weather?" + q + "&" + units + "&" + appid + yourAPIKey;
 
@@ -50,5 +50,7 @@ function draw() {
     textSize(32);
     text(where, 300, 480-100)
     text(h + ":" + m + ":" + s + " " + suffix, 300, 480-40);
-    text(currentTemp + "º", 520, 480-40);
+    text(currentTemp + "\xB0", 520, 480-40);
+    // "\xB0" is a special character for the degree symbol
+    // ref: http://www.javascripter.net/faq/mathsymbols.htm
 }
