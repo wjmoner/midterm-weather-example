@@ -3,16 +3,33 @@ var q = "q=Elon,NC";
 var zip = "zip=15227";
 var units = "units=imperial";
 var appid = "appid=";
-var yourAPIKey = "42396ff80468c90bdbb51462e8b1d530"; // add your API Key here!
+var yourAPIKey = "dc7c99f4d5c604e769199773f3275fc8"; // add your API Key here!
 
-var url = "http://api.openweathermap.org/data/2.5/weather?" + q + "&" + units + "&" + appid + yourAPIKey;
+// timer code
+var interval = 10000; //timer's interval
+var lastRecordedTime = 0;
+// end timer code
+
+var where = "";
+var currentTemp = "";
+var h = 0; 
+var m = 0;
+var s = 0;
+var suffix;
+
+var url = "http://api.openweathermap.org/data/2.5/weather?" + zip + "&" + units + "&" + appid + yourAPIKey;
 
 // you can change this around to include other data from the OpenWeatherMaps API
 // the variable structure above makes the code more readable
 
 function preload() {
-    weatherData = loadJSON(url);
-    print(weatherData); // can view weather API object in console to identify keys
+    
+    weatherData = loadJSON(url, weatherUpdate);
+    
+    setInterval( function() {
+        weatherData = loadJSON(url, weatherUpdate);
+    }, 5000);
+    
 }
 
 function setup() {
@@ -24,13 +41,36 @@ function setup() {
 function draw() {
 
     background(0);
+    calculateTime();
+    displayText();
+    
+}
 
-    var h = hour();
-    var m = minute();
-    var s = second();
-    var suffix = "AM";
-    var where = weatherData.name;
-    var currentTemp = round(weatherData.main.temp); 
+function weatherUpdate() {
+    
+    print(weatherData);
+    
+    where = weatherData.name;
+    currentTemp = round(weatherData.main.temp); 
+
+}
+
+function displayText() {
+    
+    textSize(32);
+    
+    text(where, 300, 480-100)
+    text(h + ":" + m + ":" + s + " " + suffix, 300, 480-40);
+    text(currentTemp + "\xB0", 520, 480-40);
+    // "\xB0" is a special character for the degree symbol
+    // ref: http://www.javascripter.net/faq/mathsymbols.htm
+}
+
+function calculateTime() {
+    h = hour();
+    m = minute();
+    s = second();
+    suffix = "AM";
 
     if (h > 12) {
         h = h - 12;
@@ -46,11 +86,4 @@ function draw() {
     if (s < 10) {
         s = "0" + s;
     }
-
-    textSize(32);
-    text(where, 300, 480-100)
-    text(h + ":" + m + ":" + s + " " + suffix, 300, 480-40);
-    text(currentTemp + "\xB0", 520, 480-40);
-    // "\xB0" is a special character for the degree symbol
-    // ref: http://www.javascripter.net/faq/mathsymbols.htm
 }

@@ -20,14 +20,11 @@ EXTRA: For live polling, you might be able to use code such as this to set up a 
 ```
 // from https://www.openprocessing.org/sketch/99785
 
-int interval = 2000; //timer's interval
-int lastRecordedTime = 0;
+var interval = 2000; //timer's interval
+var lastRecordedTime = 0;
 
-void setup(){
-  createCanvas(300,300);
-}
 
-void draw(){
+function draw(){
   background(0);
   //did the interval' time pass?
   if(millis()-lastRecordedTime>interval){
