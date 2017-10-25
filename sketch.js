@@ -3,7 +3,7 @@ var q = "q=Elon,NC";
 var zip = "zip=15227";
 var units = "units=imperial";
 var appid = "appid=";
-var yourAPIKey = "dc7c99f4d5c604e769199773f3275fc8"; // add your API Key here!
+var yourAPIKey = ""; // add your API Key here!
 
 // timer code
 var interval = 10000; //timer's interval
